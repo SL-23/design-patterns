@@ -24,6 +24,39 @@ struct Journal
         entries.push_back(lexical_cast<string>(count++) + ": " + entry);
         cout << count << endl;
     }
+
+    void save(const string &filename)
+    {
+        ofstream ofs(filename);
+        for (auto &e : entries)
+        {
+            ofs << e << endl;
+        }
+    }
+};
+
+struct PersistenceManager
+{
+    int nonStatic;
+    static void save(const Journal &j, const string &filename)
+    {
+        ofstream ofs(filename);
+
+        /*
+        Static member functions are allowed to access only the
+        static data members or other static member functions,
+        they can not access the non-static data members or
+        member functions of the class.
+        */
+
+        // cout << nonStatic << endl;
+        // ---> invalid usage of non static member in a static function
+
+        for (auto &e : j.entries)
+        {
+            ofs << e << endl;
+        }
+    }
 };
 
 int main()
@@ -32,9 +65,9 @@ int main()
     journal.add_entry("i ate a bug");
     journal.add_entry("i cried");
     journal.add_entry("i felt sad");
-    for (string line : journal.entries)
-    {
-        cout << line << endl;
-    }
+
+    PersistenceManager pm;
+    pm.save(journal, "mydiary");
+
     return 0;
 }
