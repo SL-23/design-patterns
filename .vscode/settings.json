@@ -3,6 +3,7 @@
         "iosfwd": "cpp",
         "vector": "cpp",
         "new": "cpp",
-        "__mutex_base": "cpp"
+        "__mutex_base": "cpp",
+        "iostream": "cpp"
     }
 }
