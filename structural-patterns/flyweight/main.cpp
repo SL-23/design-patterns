@@ -17,6 +17,13 @@ struct SharedState
   {
     return os << "[" << ss.brand_ << "," << ss.model_ << "," << ss.color_ << "]";
   }
+  friend void testFriend(SharedState &ss)
+  {
+    cout << endl
+         << "TESTING FRIEND::" << endl
+         << ss.brand_ << endl
+         << endl;
+  }
 };
 
 struct UniqueState
@@ -51,6 +58,7 @@ public:
 
   void Operation(const UniqueState &unique_state) const
   {
+    testFriend(*shared_state_);
     cout << "Flyweight: Displaying shared (" << *shared_state_ << ") and unique (" << unique_state << ") state.\n";
   }
 };
